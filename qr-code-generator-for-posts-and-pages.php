@@ -2,7 +2,7 @@
 /*
 Plugin Name: QR Code Generator for All Post Types
 Description: Adds a "Generate QR Code" link in the admin area to create a QR code for posts, pages, products, and all custom post types.
-Version: 1.3
+Version: 1.4
 Author: SourceCodePlugins
 Author URI: https://sourcecode.es
 License: GPLv2 or later
