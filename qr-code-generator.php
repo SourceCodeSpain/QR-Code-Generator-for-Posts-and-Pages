@@ -2,12 +2,13 @@
 /*
 Plugin Name: QR Code Generator for Posts and Pages
 Description: Adds a "Generate QR Code" link in the admin area to create a QR code for each post and page.
-Version: 1.0
+Version: 1.1
 Author: SourceCodePlugins
 Author URI: https://sourcecode.es
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: qr-code-generator
+Text Domain: qr-code-generator-for-posts-and-pages
+
 */
 
 add_filter('post_row_actions', 'add_qr_code_link_to_posts', 10, 2);

@@ -1,9 +1,10 @@
 === QR Code Generator for Posts and Pages ===
-Contributors: yourusername
+Contributors: SourceCodePlugins
+Author URI: https://sourcecode.es
 Tags: QR code, admin tools, posts, pages
 Requires at least: 5.0
 Tested up to: 6.7.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Description: Easily generate QR codes for your posts and pages directly from the WordPress admin interface. This plugin adds a "Generate QR Code" link to your post and page lists, allowing you to quickly create QR codes for sharing URLs.
