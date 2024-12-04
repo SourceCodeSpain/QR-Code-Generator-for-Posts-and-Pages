@@ -2,7 +2,7 @@
 /*
 Plugin Name: QR Code Generator for All Post Types
 Description: Adds a "Generate QR Code" link in the admin area to create a QR code for posts, pages, products, and all custom post types.
-Version: 1.4
+Version: 1.3
 Author: SourceCodePlugins
 Author URI: https://sourcecode.es
 License: GPLv2 or later
@@ -10,23 +10,13 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: qr-code-generator-for-posts-and-pages
 */
 
-// Hook into all post types dynamically
-add_action('admin_init', 'register_qr_code_link_filters');
 
-function register_qr_code_link_filters() {
-    $post_types = get_post_types(['public' => true], 'names'); // Get all public post types
-    foreach ($post_types as $post_type) {
-        add_filter("post_row_actions", 'add_qr_code_link_to_post_types', 10, 2); // For posts
-        add_filter("page_row_actions", 'add_qr_code_link_to_post_types', 10, 2); // For pages
-        if ($post_type !== 'post' && $post_type !== 'page') {
-            add_filter("{$post_type}_row_actions", 'add_qr_code_link_to_post_types', 10, 2); // For custom post types
-        }
-    }
-}
+add_filter('post_row_actions', 'add_qr_code_link_to_all_post_types', 10, 2);
+add_filter('page_row_actions', 'add_qr_code_link_to_all_post_types', 10, 2);
 
-function add_qr_code_link_to_post_types($actions, $post) {
-    $post_types = get_post_types(['public' => true], 'names'); // Get all public post types
-    if (in_array($post->post_type, $post_types)) {
+function add_qr_code_link_to_all_post_types($actions, $post) {
+    // Add the "Generate QR Code" link for posts, pages, and WooCommerce products
+    if (in_array($post->post_type, ['post', 'page', 'product'])) {
         $qr_code_url = add_query_arg(array(
             'qr_code_post' => $post->ID,
             '_wpnonce' => wp_create_nonce('generate_qr_code_nonce'),
@@ -47,7 +37,7 @@ function generate_qr_code_for_post() {
         }
 
         // Check permissions
-        if (!current_user_can('edit_posts')) {
+        if (!current_user_can('edit_posts') && !current_user_can('edit_products')) {
             wp_die('You do not have permission to perform this action');
         }
 
@@ -63,7 +53,7 @@ function generate_qr_code_for_post() {
             echo '<div style="text-align: center; padding-top: 50px;">';
             echo '<h1>QR Code for ' . esc_html(get_the_title($post_id)) . '</h1>';
             echo '<p><img src="' . esc_url($qr_code_image) . '" alt="QR Code"></p>';
-            echo '<p><a href="' . esc_url(admin_url('edit.php?post_type=' . get_post_type($post_id))) . '">Back to All Items</a></p>';
+            echo '<p><a href="' . esc_url(admin_url('edit.php?post_type=' . get_post_type($post_id))) . '">Back to Posts/Pages/Products</a></p>';
             echo '</div>';
             exit;
         }
