@@ -36,9 +36,12 @@ Yes, the plugin automatically detects and supports all public custom post types.
 = How secure is it? =
 The plugin uses WordPress nonces to verify requests and ensure only authorized users can generate QR codes.
 
-== Screenshots ==
-1. "Generate QR Code" link in the admin panel for posts, pages, or products.
-2. QR code generated for a post or page.
+== External services ==
+
+This plugin connects to an API to create a QR code based on the page's URL.
+
+It sends the page/post/cpt URL to the API at https://qrserver.com. No personal, website or user information is sent to the API other than the URL.
+
 
 == Changelog ==
 = 1.4 =

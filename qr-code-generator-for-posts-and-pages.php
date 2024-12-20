@@ -9,12 +9,12 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: qr-code-generator-for-posts-and-pages
 */
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+add_filter('post_row_actions', 'scqr_generateCode', 10, 2);
+add_filter('page_row_actions', 'scqr_generateCode', 10, 2);
 
-add_filter('post_row_actions', 'add_qr_code_link_to_all_post_types', 10, 2);
-add_filter('page_row_actions', 'add_qr_code_link_to_all_post_types', 10, 2);
-
-function add_qr_code_link_to_all_post_types($actions, $post) {
+function scqr_generateCode($actions, $post) {
     // Add the "Generate QR Code" link for posts, pages, and WooCommerce products
     if (in_array($post->post_type, ['post', 'page', 'product'])) {
         $qr_code_url = add_query_arg(array(
@@ -26,9 +26,9 @@ function add_qr_code_link_to_all_post_types($actions, $post) {
     return $actions;
 }
 
-add_action('admin_init', 'generate_qr_code_for_post');
+add_action('admin_init', 'scqr_showLink');
 
-function generate_qr_code_for_post() {
+function scqr_showLink() {
     if (isset($_GET['qr_code_post']) && isset($_GET['_wpnonce'])) {
         // Verify nonce
         $nonce = sanitize_text_field(wp_unslash($_GET['_wpnonce']));
